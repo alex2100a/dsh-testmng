@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>tmsync 测试资产工作台</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="app">
+    <div id="compat-banner" class="compat-banner hidden" role="status"></div>
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">t</span>
+        <span class="brand-name">测试资产工作台</span>
+      </div>
+      <div class="project-picker">
+        <label for="project-select">项目</label>
+        <select id="project-select"></select>
+      </div>
+      <nav class="tabs" id="tabs">
+        <button data-kind="requirement" class="tab active">测试需求</button>
+        <button data-kind="testcase" class="tab">测试用例</button>
+        <button data-kind="test-plan" class="tab">测试计划</button>
+        <button data-kind="defect" class="tab">测试缺陷</button>
+        <button data-kind="test-report" class="tab">测试报告</button>
+        <button data-kind="config" class="tab">配置</button>
+      </nav>
+      <div class="top-actions">
+        <span id="realtime-dot" class="realtime-dot off" title="实时更新未连接" aria-label="实时更新状态"></span>
+        <button id="sync-chip" class="sync-chip muted" aria-haspopup="dialog" aria-expanded="false" title="平台同步状态">
+          <span id="sync-chip-icon" class="sync-chip-icon">·</span>
+          <span id="sync-chip-label" class="sync-chip-label">—</span>
+        </button>
+        <button id="refresh-btn" class="btn icon-btn" title="刷新平台同步状态" aria-label="刷新平台同步状态">⟳</button>
+        <button id="start-btn" class="btn primary">发起会话</button>
+        <div class="menu-wrap">
+          <button id="more-btn" class="btn icon-btn" aria-haspopup="menu" aria-expanded="false" aria-label="更多操作" title="更多操作">⋯</button>
+          <div id="more-menu" class="menu hidden" role="menu">
+            <button id="menu-pull" class="menu-item" role="menuitem">从平台拉取</button>
+            <button id="menu-push" class="menu-item" role="menuitem">推送到平台</button>
+            <div class="menu-sep"></div>
+            <button id="menu-git" class="menu-item" role="menuitem">创建本地检查点</button>
+            <button id="menu-config" class="menu-item" role="menuitem">配置</button>
+          </div>
+        </div>
+      </div>
+      <div id="sync-popover" class="popover hidden" role="dialog" aria-label="平台同步状态">
+        <div class="popover-head">
+          <strong>平台同步</strong>
+          <span id="sync-popover-time" class="muted"></span>
+        </div>
+        <div id="sync-popover-body" class="popover-body"></div>
+        <div class="popover-actions">
+          <button id="popover-pull" class="btn small">从平台拉取</button>
+          <button id="popover-push" class="btn small">推送到平台</button>
+          <button id="popover-close" class="btn small">关闭</button>
+        </div>
+      </div>
+    </header>
+
+    <main id="main" class="layout">
+      <aside id="sidebar" class="sidebar">
+        <div class="sidebar-tools">
+          <input id="search" type="search" placeholder="搜索编号/标题/路径">
+          <button id="only-diff" class="btn small" aria-pressed="false">只看差异</button>
+        </div>
+        <div id="tree" class="tree" role="tree"></div>
+      </aside>
+      <section id="detail" class="detail">
+        <div id="empty" class="empty">
+          <h2>选择一个条目</h2>
+          <p>左侧目录树显示本地与平台的状态；点击条目查看内容、差异和信息。</p>
+          <p class="muted">状态：✓ 一致 · M 本地修改 · A 本地新增 · D 本地删除 · ↓ 平台更新 · + 平台新增 · ! 冲突 · ? 无效</p>
+        </div>
+        <div id="detail-body" class="detail-body hidden"></div>
+      </section>
+      <aside id="sidepanel" class="sidepanel">
+        <div class="panel-head">
+          <strong>平台同步</strong>
+          <span id="remote-time" class="muted"></span>
+        </div>
+        <div id="sync-panel" class="sync-panel"></div>
+        <div class="panel-head"><strong>本地版本（Git）</strong></div>
+        <div id="git-panel" class="git-panel"></div>
+        <div class="panel-head"><strong>最近操作</strong></div>
+        <div id="log-panel" class="log-panel"></div>
+      </aside>
+    </main>
+
+    <div id="toast" class="toast hidden" role="status"></div>
+    <div id="modal" class="modal hidden" role="dialog" aria-modal="true">
+      <div class="modal-body">
+        <div class="modal-head"><strong id="modal-title">配置</strong><button id="modal-close" class="btn small">关闭</button></div>
+        <div id="modal-content"></div>
+      </div>
+    </div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>

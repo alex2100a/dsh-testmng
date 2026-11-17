@@ -1,0 +1,10 @@
+# tmsync bundle patch：向 profile 清单插入插件行。
+# 宿主半（exports "."）在 DSH 进程内运行：读取 ~/.dsh/tmsync/config.json、
+# 提供 ctx.tmsync 服务、注册 /api/tmsync/* 路由与系统提示播报。
+# 客户端半（exports "./client"）注册侧边栏「测试资产」入口与主面板 iframe。
+# 注意：PAT 禁止写入本文件；只存 ~/.dsh/tmsync/config.json（0600）。
+- insert:
+    - id: tmsync
+      name: 'tmsync'
+      config:
+        announceToAgent: true
